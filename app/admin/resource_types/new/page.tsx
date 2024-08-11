@@ -1,8 +1,10 @@
 "use client"
- 
+
+import Link from "next/link"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import PageHeader from "@/components/ui/PageHeader"
 import {
   Form,
   FormControl,
@@ -13,6 +15,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { ArrowLeft } from "lucide-react"
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -22,7 +25,7 @@ export default function NewResourceType() {
   const resourceTypeForm = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
+      name: "",
     }
   })
 
@@ -31,8 +34,13 @@ export default function NewResourceType() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h2 className="text-2xl font-bold mb-6">Create New Resource Type</h2>
+    <div className="flex h-screen flex-col items-center justify-center">
+      <PageHeader className="mb-6 flex justify-between gap-x-2">
+        <Link href="/admin/resource_types">
+          <Button variant="outline" size="icon"><ArrowLeft /></Button>
+        </Link>
+        <h1>Create New Resource Type</h1>
+      </PageHeader>
       <Form {...resourceTypeForm}>
         <form onSubmit={resourceTypeForm.handleSubmit(onSubmit)} className="w-96 space-y-8">
           <FormField
