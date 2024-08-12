@@ -5,12 +5,15 @@ import { ArrowLeft } from "lucide-react"
 import { z } from "zod"
 import PageHeader from "@/components/ui/PageHeader"
 import { Button } from "@/components/ui/button"
-import ResourceTypeForm, { resourceTypeFormSchema } from "../ResourceTypeForm"
+import { resourceTypes } from "@/app/lib/placeholder-data"
+import ResourceTypeForm, { resourceTypeFormSchema } from "../../ResourceTypeForm"
 
-export default function NewResourceTypePage() {
-  const onCreateResourceType = (values: z.infer<typeof resourceTypeFormSchema>) => {
+export default function EditResourceTypePage({ params }: { params: { id: string } }) {
+  const onEditResourceType = (values: z.infer<typeof resourceTypeFormSchema>) => {
     console.log(values)
   }
+
+  const defaultValues = resourceTypes.find(resourceType => resourceType.id === parseInt(params.id))
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">
@@ -18,9 +21,9 @@ export default function NewResourceTypePage() {
         <Link href="/admin/resource_types">
           <Button variant="outline" size="icon"><ArrowLeft /></Button>
         </Link>
-        <h1>Create New Resource Type</h1>
+        <h1>Edit Resource Type</h1>
       </PageHeader>
-      <ResourceTypeForm onSubmit={onCreateResourceType} />
+      <ResourceTypeForm defaultValues={defaultValues} onSubmit={onEditResourceType} />
     </div>
   )
 }

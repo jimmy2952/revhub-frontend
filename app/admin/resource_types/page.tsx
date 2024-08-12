@@ -56,7 +56,9 @@ export default function ResourceTypesIndex() {
                 {format(resourceType.updatedAt, "yyyy-MM-dd hh:mm z")}
               </TableCell>
               <TableCell className="flex justify-center gap-x-2">
-                <Button>Edit</Button>
+                <Link href={`/admin/resource_types/${resourceType.id}/edit`}>
+                  <Button>Edit</Button>
+                </Link>
                 <ConfirmDialog
                   title="Are you sure?"
                   description={`Resource type id: ${resourceType.id} will be deleted`}
