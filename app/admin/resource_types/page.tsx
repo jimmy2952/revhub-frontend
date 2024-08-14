@@ -24,7 +24,7 @@ export default function ResourceTypesIndex() {
   }
 
   return (
-    <div className="mx-auto flex h-screen max-w-screen-xl flex-col items-center justify-center">
+    <div className="flex size-full flex-col items-center justify-center">
       <PageHeader className="flex gap-x-4">
         <h1>Resource Types</h1>
         <Link href="/admin/resource_types/new">

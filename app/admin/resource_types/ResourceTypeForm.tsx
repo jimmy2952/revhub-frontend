@@ -29,7 +29,7 @@ export default function ResourceTypeForm({ defaultValues = { name: ""}, onSubmit
 
   return (
     <Form {...resourceTypeForm}>
-      <form onSubmit={resourceTypeForm.handleSubmit(onSubmit)} className="w-96 space-y-8">
+      <form onSubmit={resourceTypeForm.handleSubmit(onSubmit)} className="w-full space-y-8">
         <FormField
           control={resourceTypeForm.control}
           name="name"
