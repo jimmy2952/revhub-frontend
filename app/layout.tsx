@@ -10,6 +10,7 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu"
 import Logo from "@/components/ui/Logo"
+import { Button } from "@/components/ui/button"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -27,9 +28,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="container flex h-14 max-w-screen-2xl items-center">
+        <div className="container flex h-14 max-w-screen-2xl items-center justify-between">
           <NavigationMenu>
             <NavigationMenuList>
+              {/* Left */}
               {/* Logo */}
               <NavigationMenuItem>
                 <Link href="/">
@@ -54,6 +56,13 @@ export default function RootLayout({
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
+
+          {/* Right */}
+          <Link href="/admin" legacyBehavior passHref>
+            <Button>
+              Admin
+            </Button>
+          </Link>
         </div>
         {children}
       </body>
