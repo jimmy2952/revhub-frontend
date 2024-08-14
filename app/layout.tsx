@@ -1,6 +1,16 @@
 import React from "react"
 import type { Metadata } from "next"
+import Link from "next/link"
 import { Inter } from "next/font/google"
+import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+} from "@/components/ui/navigation-menu"
+import Logo from "@/components/ui/Logo"
+import { Button } from "@/components/ui/button"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -17,7 +27,45 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="container flex h-14 max-w-screen-2xl items-center justify-between">
+          <NavigationMenu>
+            <NavigationMenuList>
+              {/* Left */}
+              {/* Logo */}
+              <NavigationMenuItem>
+                <Link href="/">
+                  <Logo className="mx-2" />
+                </Link>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <Link href="/recommendation" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Recommendation
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <Link href="/book" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Book
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+
+          {/* Right */}
+          <Link href="/admin" legacyBehavior passHref>
+            <Button>
+              Admin
+            </Button>
+          </Link>
+        </div>
+        {children}
+      </body>
     </html>
   )
 }
