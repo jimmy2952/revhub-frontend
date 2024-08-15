@@ -8,7 +8,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname()
 
   return (
-    <section className="container flex py-8">
+    <section className="mx-auto flex max-w-screen-2xl py-8">
       <nav className="flex w-44 flex-col gap-y-4 text-muted-foreground">
         <Link href="/admin/resources" className={pathname === "/admin/resources" ? "font-semibold text-primary" : ""}>
           Resources
