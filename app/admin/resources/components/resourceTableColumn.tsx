@@ -173,7 +173,7 @@ export const resourceTableColumn: ColumnDef<Resource>[] = [
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuItem>
-                  <Link href={`/admin/resources/${row.original.id}/edit`}>Edit</Link>
+                  <Link href={`/admin/resources/${row.original.id}/edit`} className="block w-full">Edit</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <DialogTrigger>Preview Card</DialogTrigger>
