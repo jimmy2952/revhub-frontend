@@ -1,4 +1,4 @@
-import { Resource, ResourceType } from "./types/dataDefinition" 
+import { Resource, ResourceType, ResourceTag } from "./types/dataDefinition" 
 
 export const resourceTypes: ResourceType[] = [
   { id: 1, name: "book", createdAt: new Date(), updatedAt: new Date() },
@@ -49,4 +49,10 @@ export const resources: Resource[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
+]
+
+export const resourceTags: ResourceTag[] = [
+  { id: 1, name: "container" },
+  { id: 2, name: "database" },
+  { id: 3, name: "frontend" },
 ]

@@ -17,3 +17,8 @@ export interface ResourceType {
   updatedAt: Date
 }
 
+export interface ResourceTag {
+  id: number
+  name: string
+}
+
