@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import Image from "next/image"
 import { format } from "date-fns"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
@@ -171,7 +172,9 @@ export const resourceTableColumn: ColumnDef<Resource>[] = [
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem>Edit</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href={`/admin/resources/${row.original.id}/edit`}>Edit</Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem>
                   <DialogTrigger>Preview Card</DialogTrigger>
                 </DropdownMenuItem>
