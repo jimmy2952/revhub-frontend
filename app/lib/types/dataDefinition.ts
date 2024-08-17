@@ -5,6 +5,7 @@ export interface Resource {
   resourceUrl: string
   imageUrl?: string
   resourceType: string
+  tags?: string[],
   createdAt: Date
   updatedAt: Date
 }

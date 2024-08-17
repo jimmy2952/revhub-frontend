@@ -14,6 +14,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import ResourceCard from "@/components/ui/ResourceCard"
 
 export const resourceTableColumn: ColumnDef<Resource>[] = [
   {
@@ -143,21 +151,35 @@ export const resourceTableColumn: ColumnDef<Resource>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: () => {
+    cell: ({ row }) => {
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="size-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="size-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <>
+          {/* Preview dialog */}
+          <Dialog>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Preview Resource Card</DialogTitle>
+              </DialogHeader>
+              <ResourceCard resource={row.original} />
+            </DialogContent>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="size-8 p-0">
+                  <span className="sr-only">Open menu</span>
+                  <MoreHorizontal className="size-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuItem>Edit</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <DialogTrigger>Preview Card</DialogTrigger>
+                </DropdownMenuItem>
+                <DropdownMenuItem>Delete</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </Dialog>
+        </>
       )
     },
   },
