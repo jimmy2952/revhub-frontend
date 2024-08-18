@@ -14,7 +14,7 @@ interface DialogContextProviderProps {
 
 interface DialogProps {
   title: string
-  description?: string
+  description: string
   content?: ReactNode
   footer?: ReactNode
   onClose?: () => void
