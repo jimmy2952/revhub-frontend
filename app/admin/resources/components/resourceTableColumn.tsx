@@ -4,8 +4,9 @@ import Link from "next/link"
 import Image from "next/image"
 import { format } from "date-fns"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
-import { ColumnDef } from "@tanstack/react-table"
+import { ColumnDef, Row } from "@tanstack/react-table"
 import { Resource } from "@/app/lib/types/dataDefinition"
+import { useModalContext } from "@/app/lib/context/ModalContext"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 import {
@@ -15,14 +16,55 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
 import ResourceCard from "@/components/ui/ResourceCard"
+import ConfirmDialog from "@/components/ui/ConfirmDialog"
+
+const ResourceActionCell = ({ row }: { row: Row<Resource> }) => {
+  const { openModal } = useModalContext()
+  const onResourceDelete = (id: number) => {
+    console.log(`Resource type id: ${id} will be deleted`)
+  }
+
+  const previewResourceCard = () => {
+    openModal({
+      modalProps: {
+        title: "Preview Card",
+        content: <ResourceCard resource={row.original} />,
+      },
+    })
+  }
+
+  return (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="size-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="size-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem>
+            <Link href={`/admin/resources/${row.original.id}/edit`} className="block w-full">Edit</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={previewResourceCard}>
+            Preview Card
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <ConfirmDialog
+              title="Are you sure?"
+              description={`Resource type id: ${row.original.id} will be deleted`}
+              onConfirm={() => { onResourceDelete(row.original.id) }}
+            >
+              <Button variant="destructive">Delete</Button>
+            </ConfirmDialog>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
+  )
+}
 
 export const resourceTableColumn: ColumnDef<Resource>[] = [
   {
@@ -152,38 +194,6 @@ export const resourceTableColumn: ColumnDef<Resource>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
-      return (
-        <>
-          {/* Preview dialog */}
-          <Dialog>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Preview Resource Card</DialogTitle>
-              </DialogHeader>
-              <ResourceCard resource={row.original} />
-            </DialogContent>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="size-8 p-0">
-                  <span className="sr-only">Open menu</span>
-                  <MoreHorizontal className="size-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem>
-                  <Link href={`/admin/resources/${row.original.id}/edit`} className="block w-full">Edit</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <DialogTrigger>Preview Card</DialogTrigger>
-                </DropdownMenuItem>
-                <DropdownMenuItem>Delete</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </Dialog>
-        </>
-      )
-    },
+    cell: ResourceActionCell,
   },
 ]
