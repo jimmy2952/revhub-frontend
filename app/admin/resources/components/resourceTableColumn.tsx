@@ -6,7 +6,7 @@ import { format } from "date-fns"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import { ColumnDef, Row } from "@tanstack/react-table"
 import { Resource } from "@/app/lib/types/dataDefinition"
-import { useModalContext } from "@/app/lib/context/ModalContext"
+import { useDialogContext, DIALOG_TYPE } from "@/app/lib/context/DialogContext"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 import {
@@ -17,19 +17,29 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import ResourceCard from "@/components/ui/ResourceCard"
-import ConfirmDialog from "@/components/ui/ConfirmDialog"
 
 const ResourceActionCell = ({ row }: { row: Row<Resource> }) => {
-  const { openModal } = useModalContext()
+  const { openDialog } = useDialogContext()
   const onResourceDelete = (id: number) => {
     console.log(`Resource type id: ${id} will be deleted`)
   }
 
   const previewResourceCard = () => {
-    openModal({
-      modalProps: {
+    openDialog({
+      dialogProps: {
         title: "Preview Card",
         content: <ResourceCard resource={row.original} />,
+      },
+    })
+  }
+
+  const confirmDelete = () => {
+    openDialog({
+      type: DIALOG_TYPE.CONFIRM,
+      dialogProps: {
+        title: "Are you sure?",
+        description: `Resource id: ${row.original.id} will be deleted`,
+        onConfirm: () => { onResourceDelete(row.original.id) },
       },
     })
   }
@@ -51,14 +61,8 @@ const ResourceActionCell = ({ row }: { row: Row<Resource> }) => {
           <DropdownMenuItem onClick={previewResourceCard}>
             Preview Card
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <ConfirmDialog
-              title="Are you sure?"
-              description={`Resource type id: ${row.original.id} will be deleted`}
-              onConfirm={() => { onResourceDelete(row.original.id) }}
-            >
-              <Button variant="destructive">Delete</Button>
-            </ConfirmDialog>
+          <DropdownMenuItem onClick={confirmDelete}>
+            Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
