@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { format } from "date-fns"
 import { Plus } from "lucide-react"
+import { useDialogContext, DIALOG_TYPE } from "@/app/lib/context/DialogContext"
 import {
   Table,
   TableBody,
@@ -14,13 +15,24 @@ import {
 } from "@/components/ui/table"
 import PageHeader from "@/components/ui/PageHeader"
 import { Button } from "@/components/ui/button"
-import ConfirmDialog from "@/components/ui/ConfirmDialog"
 import { resourceTypes } from "@/app/lib/placeholder-data"
 
 export default function ResourceTypesIndex() {
+  const { openDialog } = useDialogContext()
 
   const onResourceTypeDelete = (id: number) => {
     console.log(`Resource type id: ${id} will be deleted`)
+  }
+
+  const confirmDelete = (id: number) => {
+    openDialog({
+      type: DIALOG_TYPE.CONFIRM,
+      dialogProps: {
+        title: "Are you sure?",
+        description: `Resource id: ${id} will be deleted`,
+        onConfirm: () => { onResourceTypeDelete(id) },
+      },
+    })
   }
 
   return (
@@ -59,13 +71,7 @@ export default function ResourceTypesIndex() {
                 <Link href={`/admin/resource_types/${resourceType.id}/edit`}>
                   <Button>Edit</Button>
                 </Link>
-                <ConfirmDialog
-                  title="Are you sure?"
-                  description={`Resource type id: ${resourceType.id} will be deleted`}
-                  onConfirm={() => { onResourceTypeDelete(resourceType.id) }}
-                >
-                  <Button variant="destructive">Delete</Button>
-                </ConfirmDialog>
+                <Button onClick={() => { confirmDelete(resourceType.id)}} variant="destructive">Delete</Button>
               </TableCell>
             </TableRow>
           ))}
