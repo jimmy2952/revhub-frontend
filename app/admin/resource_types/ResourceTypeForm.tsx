@@ -22,14 +22,20 @@ interface ResourceTypeFormProps {
   onSubmit: (_values: z.infer<typeof resourceTypeFormSchema>) => void
 }
 
-export default function ResourceTypeForm({ defaultValues = { name: ""}, onSubmit }: ResourceTypeFormProps) {
+const initialValues = {
+  name: ""
+}
+
+export default function ResourceTypeForm({ defaultValues, onSubmit }: ResourceTypeFormProps) {
   const resourceTypeForm = useForm<z.infer<typeof resourceTypeFormSchema>>({
     resolver: zodResolver(resourceTypeFormSchema),
-    defaultValues: defaultValues
+    defaultValues: defaultValues || initialValues,
   })
 
   useEffect(() => {
-    resourceTypeForm.reset(defaultValues)
+    if (defaultValues !== undefined) {
+      resourceTypeForm.reset(defaultValues)
+    }
   }, [resourceTypeForm, defaultValues])
 
   return (

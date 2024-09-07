@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button"
 import ResourceTypeForm, { resourceTypeFormSchema } from "../../ResourceTypeForm"
 
 export default function EditResourceTypePage({ params: { id } }: { params: { id: string } }) {
-  const { data: { data: defaultValues = { name: "" } } = {} } = useQuery({
+  const { data: { data: defaultValues } = {} } = useQuery({
     queryKey: ["admin", "resource-type", id],
     queryFn: () => fetchResourceType({ id })
   })
