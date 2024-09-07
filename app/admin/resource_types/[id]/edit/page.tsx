@@ -3,17 +3,20 @@
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { z } from "zod"
+import { useQuery } from "@tanstack/react-query"
+import { fetchResourceType } from "@/app/lib/request"
 import PageHeader from "@/components/ui/PageHeader"
 import { Button } from "@/components/ui/button"
-import { resourceTypes } from "@/app/lib/placeholder-data"
 import ResourceTypeForm, { resourceTypeFormSchema } from "../../ResourceTypeForm"
 
-export default function EditResourceTypePage({ params }: { params: { id: string } }) {
+export default function EditResourceTypePage({ params: { id } }: { params: { id: string } }) {
+  const { data: { data: defaultValues = { name: "" } } = {} } = useQuery({
+    queryKey: [],
+    queryFn: () => fetchResourceType({ id })
+  })
   const onEditResourceType = (values: z.infer<typeof resourceTypeFormSchema>) => {
     console.log(values)
   }
-
-  const defaultValues = resourceTypes.find(resourceType => resourceType.id === parseInt(params.id))
 
   return (
     <div className="mx-auto flex w-96 flex-col items-center justify-center gap-y-3">

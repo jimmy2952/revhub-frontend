@@ -11,6 +11,10 @@ export const fetchResourceTypes = (): Promise<{ data: ResourceType[] }> => {
   return axiosInstance.get("/admin/resource-types")
 }
 
+export const fetchResourceType = ({ id }: { id: string}): Promise<{ data: ResourceType }> => {
+  return axiosInstance.get(`/admin/resource-types/${id}`)
+}
+
 export const createResourceType = (data: CreateResourceTypeInput) => {
   return axiosInstance.post("/admin/resource-types", data)
 }
