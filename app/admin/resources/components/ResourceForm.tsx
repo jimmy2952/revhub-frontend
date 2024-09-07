@@ -22,7 +22,7 @@ import {
 import MultipleSelect from "@/components/ui/multiple-select"
 import { Textarea } from "@/components/ui/textarea"
 import { resourceTypes, resourceTags } from "@/app/lib/placeholder-data"
-import { ResourceType } from "@/app/lib/types/dataDefinition"
+import { ResourceType } from "@/app/lib/types/resourceType"
 
 export const resourceFormSchema = z.object({
   name: z.string().min(2).max(50),

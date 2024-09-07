@@ -3,13 +3,20 @@
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { z } from "zod"
+import { useMutation } from "@tanstack/react-query"
+import { createResourceType } from "@/app/lib/request"
 import PageHeader from "@/components/ui/PageHeader"
 import { Button } from "@/components/ui/button"
 import ResourceTypeForm, { resourceTypeFormSchema } from "../ResourceTypeForm"
 
 export default function NewResourceTypePage() {
-  const onCreateResourceType = (values: z.infer<typeof resourceTypeFormSchema>) => {
-    console.log(values)
+  const { mutateAsync: mutateCreateResourceType } = useMutation({
+    mutationFn: (values: z.infer<typeof resourceTypeFormSchema>) => createResourceType(values)
+  })
+
+  const onCreateResourceType = async (values: z.infer<typeof resourceTypeFormSchema>) => {
+    const res = await mutateCreateResourceType(values)
+    console.log(res)
   }
 
   return (

@@ -1,4 +1,5 @@
-import { Resource, ResourceType, ResourceTag } from "./types/dataDefinition" 
+import { Resource, ResourceTag } from "./types/dataDefinition" 
+import { ResourceType } from "./types/resourceType"
 
 export const resourceTypes: ResourceType[] = [
   { id: 1, name: "book", createdAt: new Date(), updatedAt: new Date() },
