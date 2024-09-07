@@ -22,3 +22,7 @@ export const createResourceType = (data: CreateResourceTypeInput) => {
 export const updateResourceType = (id: string, data: UpdateResourceTypeInput) => {
   return axiosInstance.put(`/admin/resource-types/${id}`, data)
 }
+
+export const DeleteResourceType = ({ id }: { id: string }) => {
+  return axiosInstance.delete(`/admin/resource-types/${id}`)
+}

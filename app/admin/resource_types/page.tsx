@@ -3,9 +3,9 @@
 import Link from "next/link"
 import { format } from "date-fns"
 import { Plus } from "lucide-react"
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useMutation } from "@tanstack/react-query"
 import { useDialogContext, DIALOG_TYPE } from "@/app/lib/context/DialogContext"
-import { fetchResourceTypes } from "@/app/lib/request"
+import { DeleteResourceType, fetchResourceTypes } from "@/app/lib/request"
 import {
   Table,
   TableBody,
@@ -27,8 +27,13 @@ export default function ResourceTypesIndex() {
     queryFn: fetchResourceTypes
   })
 
-  const onResourceTypeDelete = (id: number) => {
-    console.log(`Resource type id: ${id} will be deleted`)
+  const { mutateAsync } = useMutation({
+    mutationFn: (id: string) => DeleteResourceType({ id })
+  })
+
+  const onResourceTypeDelete = async (id: number) => {
+    const res = await mutateAsync(String(id))
+    console.log(res)
   }
 
   const confirmDelete = (id: number) => {
