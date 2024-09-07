@@ -1,12 +1,16 @@
 import axios from "axios"
-import { CreateResourceTypeInput } from "./types/resourceType"
+import { ResourceType, CreateResourceTypeInput } from "./types/resourceType"
 
 const host = process.env.NEXT_PUBLIC_API_HOST
 
-export const fetchResourceTypes = () => {
-  return axios.get(`${host}/resource-types`)
+const axiosInstance = axios.create({
+  baseURL: host
+})
+
+export const fetchResourceTypes = (): Promise<{ data: ResourceType[] }> => {
+  return axiosInstance.get("/admin/resource-types")
 }
 
 export const createResourceType = (data: CreateResourceTypeInput) => {
-  return axios.post(`${host}/resource-types`, data)
+  return axiosInstance.post("/admin/resource-types", data)
 }

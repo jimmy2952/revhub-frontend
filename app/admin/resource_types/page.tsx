@@ -3,7 +3,9 @@
 import Link from "next/link"
 import { format } from "date-fns"
 import { Plus } from "lucide-react"
+import { useQuery } from "@tanstack/react-query"
 import { useDialogContext, DIALOG_TYPE } from "@/app/lib/context/DialogContext"
+import { fetchResourceTypes } from "@/app/lib/request"
 import {
   Table,
   TableBody,
@@ -15,10 +17,15 @@ import {
 } from "@/components/ui/table"
 import PageHeader from "@/components/ui/PageHeader"
 import { Button } from "@/components/ui/button"
-import { resourceTypes } from "@/app/lib/placeholder-data"
+// import { resourceTypes } from "@/app/lib/placeholder-data"
 
 export default function ResourceTypesIndex() {
   const { openDialog } = useDialogContext()
+
+  const { data: { data: resourceTypes = [] } = {} } = useQuery({
+    queryKey: ["admin", "resource-types"],
+    queryFn: fetchResourceTypes
+  })
 
   const onResourceTypeDelete = (id: number) => {
     console.log(`Resource type id: ${id} will be deleted`)
