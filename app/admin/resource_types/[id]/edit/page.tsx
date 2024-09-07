@@ -3,19 +3,24 @@
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { z } from "zod"
-import { useQuery } from "@tanstack/react-query"
-import { fetchResourceType } from "@/app/lib/request"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { fetchResourceType, updateResourceType } from "@/app/lib/request"
 import PageHeader from "@/components/ui/PageHeader"
 import { Button } from "@/components/ui/button"
 import ResourceTypeForm, { resourceTypeFormSchema } from "../../ResourceTypeForm"
 
 export default function EditResourceTypePage({ params: { id } }: { params: { id: string } }) {
   const { data: { data: defaultValues = { name: "" } } = {} } = useQuery({
-    queryKey: [],
+    queryKey: ["admin", "resource-type", id],
     queryFn: () => fetchResourceType({ id })
   })
-  const onEditResourceType = (values: z.infer<typeof resourceTypeFormSchema>) => {
-    console.log(values)
+  const { mutateAsync: mutateUpdateResourceType } = useMutation({
+    mutationFn: (data: z.infer<typeof resourceTypeFormSchema>) => updateResourceType(id, data)
+  })
+
+  const onEditResourceType = async (values: z.infer<typeof resourceTypeFormSchema>) => {
+    const res = await mutateUpdateResourceType(values)
+    console.log(res)
   }
 
   return (

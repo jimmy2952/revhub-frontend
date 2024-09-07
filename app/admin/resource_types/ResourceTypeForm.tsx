@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -26,6 +27,10 @@ export default function ResourceTypeForm({ defaultValues = { name: ""}, onSubmit
     resolver: zodResolver(resourceTypeFormSchema),
     defaultValues: defaultValues
   })
+
+  useEffect(() => {
+    resourceTypeForm.reset(defaultValues)
+  }, [resourceTypeForm, defaultValues])
 
   return (
     <Form {...resourceTypeForm}>

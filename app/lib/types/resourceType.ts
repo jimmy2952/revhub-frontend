@@ -8,3 +8,7 @@ export interface ResourceType {
 export interface CreateResourceTypeInput {
   name: string
 }
+
+export interface UpdateResourceTypeInput {
+  name: string
+}
