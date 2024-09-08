@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { ArrowLeft } from "lucide-react"
 import { z } from "zod"
 import { useToast } from "@/hooks/use-toast"
@@ -12,7 +13,9 @@ import ResourceTypeForm, { resourceTypeFormSchema } from "../../ResourceTypeForm
 
 export default function EditResourceTypePage({ params: { id } }: { params: { id: string } }) {
   const { toast } = useToast()
-  const { data: { data: defaultValues } = {} } = useQuery({
+  const router = useRouter()
+
+  const { data: defaultValues } = useQuery({
     queryKey: ["admin", "resource-type", id],
     queryFn: () => fetchResourceType({ id })
   })
@@ -21,7 +24,8 @@ export default function EditResourceTypePage({ params: { id } }: { params: { id:
   })
 
   const onEditResourceType = async (values: z.infer<typeof resourceTypeFormSchema>) => {
-    const { data: { name }} = await mutateUpdateResourceType(values)
+    const { name } = await mutateUpdateResourceType(values)
+    router.push("/admin/resource_types")
     toast({
       title: "Resource type was updated successfully",
       description: `id: ${id}, name: ${name}`,

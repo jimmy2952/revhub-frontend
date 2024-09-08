@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { ArrowLeft } from "lucide-react"
 import { z } from "zod"
 import { useToast } from "@/hooks/use-toast"
@@ -12,12 +13,15 @@ import ResourceTypeForm, { resourceTypeFormSchema } from "../ResourceTypeForm"
 
 export default function NewResourceTypePage() {
   const { toast } = useToast()
+  const router = useRouter()
+
   const { mutateAsync: mutateCreateResourceType } = useMutation({
     mutationFn: (values: z.infer<typeof resourceTypeFormSchema>) => createResourceType(values)
   })
 
   const onCreateResourceType = async (values: z.infer<typeof resourceTypeFormSchema>) => {
-    const { data: { id, name } } = await mutateCreateResourceType(values)
+    const { id, name } = await mutateCreateResourceType(values)
+    router.push("/admin/resource_types")
     toast({
       title: "Resource type was created successfully",
       description: `id: ${id}, name: ${name}`,

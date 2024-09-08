@@ -7,22 +7,22 @@ const axiosInstance = axios.create({
   baseURL: host
 })
 
-export const fetchResourceTypes = (): Promise<{ data: ResourceType[] }> => {
-  return axiosInstance.get("/admin/resource-types")
+export const fetchResourceTypes = (): Promise<ResourceType[]> => {
+  return axiosInstance.get("/admin/resource-types").then((res) => res.data)
 }
 
-export const fetchResourceType = ({ id }: { id: string }): Promise<{ data: ResourceType }> => {
-  return axiosInstance.get(`/admin/resource-types/${id}`)
+export const fetchResourceType = ({ id }: { id: string }): Promise<ResourceType> => {
+  return axiosInstance.get(`/admin/resource-types/${id}`).then((res) => res.data)
 }
 
-export const createResourceType = (data: CreateResourceTypeInput) => {
-  return axiosInstance.post("/admin/resource-types", data)
+export const createResourceType = (data: CreateResourceTypeInput): Promise<ResourceType> => {
+  return axiosInstance.post("/admin/resource-types", data).then((res) => res.data)
 }
 
-export const updateResourceType = (id: string, data: UpdateResourceTypeInput) => {
-  return axiosInstance.put(`/admin/resource-types/${id}`, data)
+export const updateResourceType = (id: string, data: UpdateResourceTypeInput): Promise<ResourceType> => {
+  return axiosInstance.put(`/admin/resource-types/${id}`, data).then((res) => res.data)
 }
 
-export const DeleteResourceType = ({ id }: { id: string }) => {
-  return axiosInstance.delete(`/admin/resource-types/${id}`)
+export const DeleteResourceType = ({ id }: { id: string }): Promise<ResourceType> => {
+  return axiosInstance.delete(`/admin/resource-types/${id}`).then((res) => res.data)
 }
