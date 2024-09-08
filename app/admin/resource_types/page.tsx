@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { format } from "date-fns"
 import { Plus } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
 import { useQuery, useMutation } from "@tanstack/react-query"
 import { useDialogContext, DIALOG_TYPE } from "@/app/lib/context/DialogContext"
 import { DeleteResourceType, fetchResourceTypes } from "@/app/lib/request"
@@ -21,6 +22,7 @@ import { Button } from "@/components/ui/button"
 
 export default function ResourceTypesIndex() {
   const { openDialog } = useDialogContext()
+  const { toast } = useToast()
 
   const { data: { data: resourceTypes = [] } = {} } = useQuery({
     queryKey: ["admin", "resource-types"],
@@ -32,8 +34,11 @@ export default function ResourceTypesIndex() {
   })
 
   const onResourceTypeDelete = async (id: number) => {
-    const res = await mutateAsync(String(id))
-    console.log(res)
+    await mutateAsync(String(id))
+    toast({
+      title: "Resource type was deleted successfully",
+      description: `id: ${id}`,
+    })
   }
 
   const confirmDelete = (id: number) => {

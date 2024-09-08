@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { z } from "zod"
+import { useToast } from "@/hooks/use-toast"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { fetchResourceType, updateResourceType } from "@/app/lib/request"
 import PageHeader from "@/components/ui/PageHeader"
@@ -10,6 +11,7 @@ import { Button } from "@/components/ui/button"
 import ResourceTypeForm, { resourceTypeFormSchema } from "../../ResourceTypeForm"
 
 export default function EditResourceTypePage({ params: { id } }: { params: { id: string } }) {
+  const { toast } = useToast()
   const { data: { data: defaultValues } = {} } = useQuery({
     queryKey: ["admin", "resource-type", id],
     queryFn: () => fetchResourceType({ id })
@@ -19,8 +21,11 @@ export default function EditResourceTypePage({ params: { id } }: { params: { id:
   })
 
   const onEditResourceType = async (values: z.infer<typeof resourceTypeFormSchema>) => {
-    const res = await mutateUpdateResourceType(values)
-    console.log(res)
+    const { data: { name }} = await mutateUpdateResourceType(values)
+    toast({
+      title: "Resource type was updated successfully",
+      description: `id: ${id}, name: ${name}`,
+    })
   }
 
   return (

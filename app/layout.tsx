@@ -10,6 +10,8 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu"
+import { Toaster as Sonner } from "@/components/ui/sonner"
+import { Toaster } from "@/components/ui/toaster"
 import Logo from "@/components/ui/Logo"
 import { Button } from "@/components/ui/button"
 import "./globals.css"
@@ -66,6 +68,8 @@ export default function RootLayout({
               </Button>
             </Link>
           </div>
+          <Sonner />
+          <Toaster />
           {children}
         </ReactQueryClientProvider>
       </body>
