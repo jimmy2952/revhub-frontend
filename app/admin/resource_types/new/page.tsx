@@ -15,7 +15,7 @@ export default function NewResourceTypePage() {
   const { toast } = useToast()
   const router = useRouter()
 
-  const { mutateAsync: mutateCreateResourceType } = useMutation({
+  const { mutateAsync: mutateCreateResourceType, isPending } = useMutation({
     mutationFn: (values: z.infer<typeof resourceTypeFormSchema>) => createResourceType(values)
   })
 
@@ -36,7 +36,7 @@ export default function NewResourceTypePage() {
       <Link href="/admin/resource_types" className="mr-auto">
         <Button variant="outline" size="icon"><ArrowLeft /></Button>
       </Link>
-      <ResourceTypeForm onSubmit={onCreateResourceType} />
+      <ResourceTypeForm onSubmit={onCreateResourceType} isSubmitting={isPending} />
     </div>
   )
 }

@@ -18,15 +18,16 @@ export const resourceTypeFormSchema = z.object({
 })
 
 interface ResourceTypeFormProps {
-  defaultValues?: z.infer<typeof resourceTypeFormSchema>,
+  defaultValues?: z.infer<typeof resourceTypeFormSchema>
   onSubmit: (_values: z.infer<typeof resourceTypeFormSchema>) => void
+  isSubmitting?: boolean
 }
 
 const initialValues = {
   name: ""
 }
 
-export default function ResourceTypeForm({ defaultValues, onSubmit }: ResourceTypeFormProps) {
+export default function ResourceTypeForm({ defaultValues, onSubmit, isSubmitting = false }: ResourceTypeFormProps) {
   const resourceTypeForm = useForm<z.infer<typeof resourceTypeFormSchema>>({
     resolver: zodResolver(resourceTypeFormSchema),
     defaultValues: defaultValues || initialValues,
@@ -54,7 +55,7 @@ export default function ResourceTypeForm({ defaultValues, onSubmit }: ResourceTy
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" loading={isSubmitting}>Submit</Button>
       </form>
     </Form>
   )

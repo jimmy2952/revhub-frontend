@@ -19,7 +19,7 @@ export default function EditResourceTypePage({ params: { id } }: { params: { id:
     queryKey: ["admin", "resource-type", id],
     queryFn: () => fetchResourceType({ id })
   })
-  const { mutateAsync: mutateUpdateResourceType } = useMutation({
+  const { mutateAsync: mutateUpdateResourceType, isPending } = useMutation({
     mutationFn: (data: z.infer<typeof resourceTypeFormSchema>) => updateResourceType(id, data)
   })
 
@@ -40,7 +40,7 @@ export default function EditResourceTypePage({ params: { id } }: { params: { id:
       <Link href="/admin/resource_types" className="mr-auto">
         <Button variant="outline" size="icon"><ArrowLeft /></Button>
       </Link>
-      <ResourceTypeForm defaultValues={defaultValues} onSubmit={onEditResourceType}  />
+      <ResourceTypeForm defaultValues={defaultValues} onSubmit={onEditResourceType} isSubmitting={isPending}  />
     </div>
   )
 }
