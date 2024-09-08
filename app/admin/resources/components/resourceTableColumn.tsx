@@ -28,6 +28,7 @@ const ResourceActionCell = ({ row }: { row: Row<Resource> }) => {
     openDialog({
       dialogProps: {
         title: "Preview Card",
+        description: "This is the card in the frontstage",
         content: <ResourceCard resource={row.original} />,
       },
     })

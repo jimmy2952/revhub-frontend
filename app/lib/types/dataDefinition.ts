@@ -11,13 +11,6 @@ export interface Resource {
   updatedAt: Date
 }
 
-export interface ResourceType {
-  id: number
-  name: string
-  createdAt: Date
-  updatedAt: Date
-}
-
 export interface ResourceTag {
   id: number
   name: string

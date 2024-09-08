@@ -1,19 +1,36 @@
 "use client"
 
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { ArrowLeft } from "lucide-react"
 import { z } from "zod"
+import { useToast } from "@/hooks/use-toast"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { fetchResourceType, updateResourceType } from "@/app/lib/request"
 import PageHeader from "@/components/ui/PageHeader"
 import { Button } from "@/components/ui/button"
-import { resourceTypes } from "@/app/lib/placeholder-data"
 import ResourceTypeForm, { resourceTypeFormSchema } from "../../ResourceTypeForm"
 
-export default function EditResourceTypePage({ params }: { params: { id: string } }) {
-  const onEditResourceType = (values: z.infer<typeof resourceTypeFormSchema>) => {
-    console.log(values)
-  }
+export default function EditResourceTypePage({ params: { id } }: { params: { id: string } }) {
+  const { toast } = useToast()
+  const router = useRouter()
 
-  const defaultValues = resourceTypes.find(resourceType => resourceType.id === parseInt(params.id))
+  const { data: defaultValues } = useQuery({
+    queryKey: ["admin", "resource-type", id],
+    queryFn: () => fetchResourceType({ id })
+  })
+  const { mutateAsync: mutateUpdateResourceType, isPending } = useMutation({
+    mutationFn: (data: z.infer<typeof resourceTypeFormSchema>) => updateResourceType(id, data)
+  })
+
+  const onEditResourceType = async (values: z.infer<typeof resourceTypeFormSchema>) => {
+    const { name } = await mutateUpdateResourceType(values)
+    router.push("/admin/resource_types")
+    toast({
+      title: "Resource type was updated successfully",
+      description: `id: ${id}, name: ${name}`,
+    })
+  }
 
   return (
     <div className="mx-auto flex w-96 flex-col items-center justify-center gap-y-3">
@@ -23,7 +40,7 @@ export default function EditResourceTypePage({ params }: { params: { id: string 
       <Link href="/admin/resource_types" className="mr-auto">
         <Button variant="outline" size="icon"><ArrowLeft /></Button>
       </Link>
-      <ResourceTypeForm defaultValues={defaultValues} onSubmit={onEditResourceType}  />
+      <ResourceTypeForm defaultValues={defaultValues} onSubmit={onEditResourceType} isSubmitting={isPending}  />
     </div>
   )
 }

@@ -3,7 +3,11 @@
 import Link from "next/link"
 import { format } from "date-fns"
 import { Plus } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { useDialogContext, DIALOG_TYPE } from "@/app/lib/context/DialogContext"
+import { DeleteResourceType, fetchResourceTypes } from "@/app/lib/request"
+import { ResourceType } from "@/app/lib/types/resourceType"
 import {
   Table,
   TableBody,
@@ -15,13 +19,29 @@ import {
 } from "@/components/ui/table"
 import PageHeader from "@/components/ui/PageHeader"
 import { Button } from "@/components/ui/button"
-import { resourceTypes } from "@/app/lib/placeholder-data"
+// import { resourceTypes } from "@/app/lib/placeholder-data"
 
 export default function ResourceTypesIndex() {
   const { openDialog } = useDialogContext()
+  const { toast } = useToast()
+  const queryClient = useQueryClient()
 
-  const onResourceTypeDelete = (id: number) => {
-    console.log(`Resource type id: ${id} will be deleted`)
+  const { data: resourceTypes = [] } = useQuery({
+    queryKey: ["admin", "resource-types"],
+    queryFn: fetchResourceTypes
+  })
+
+  const { mutateAsync } = useMutation({
+    mutationFn: (id: string) => DeleteResourceType({ id })
+  })
+
+  const onResourceTypeDelete = async (id: number) => {
+    await mutateAsync(String(id))
+    queryClient.setQueryData(["admin", "resource-types"], (prev: ResourceType[]) => prev.filter((p) => p.id !== id))
+    toast({
+      title: "Resource type was deleted successfully",
+      description: `id: ${id}`,
+    })
   }
 
   const confirmDelete = (id: number) => {

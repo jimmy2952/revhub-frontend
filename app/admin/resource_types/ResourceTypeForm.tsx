@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -17,15 +18,26 @@ export const resourceTypeFormSchema = z.object({
 })
 
 interface ResourceTypeFormProps {
-  defaultValues?: z.infer<typeof resourceTypeFormSchema>,
+  defaultValues?: z.infer<typeof resourceTypeFormSchema>
   onSubmit: (_values: z.infer<typeof resourceTypeFormSchema>) => void
+  isSubmitting?: boolean
 }
 
-export default function ResourceTypeForm({ defaultValues = { name: ""}, onSubmit }: ResourceTypeFormProps) {
+const initialValues = {
+  name: ""
+}
+
+export default function ResourceTypeForm({ defaultValues, onSubmit, isSubmitting = false }: ResourceTypeFormProps) {
   const resourceTypeForm = useForm<z.infer<typeof resourceTypeFormSchema>>({
     resolver: zodResolver(resourceTypeFormSchema),
-    defaultValues: defaultValues
+    defaultValues: defaultValues || initialValues,
   })
+
+  useEffect(() => {
+    if (defaultValues !== undefined) {
+      resourceTypeForm.reset(defaultValues)
+    }
+  }, [resourceTypeForm, defaultValues])
 
   return (
     <Form {...resourceTypeForm}>
@@ -43,7 +55,7 @@ export default function ResourceTypeForm({ defaultValues = { name: ""}, onSubmit
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" loading={isSubmitting}>Submit</Button>
       </form>
     </Form>
   )
