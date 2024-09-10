@@ -6,7 +6,7 @@ import { z } from "zod"
 import PageHeader from "@/components/ui/PageHeader"
 import { Button } from "@/components/ui/button"
 import { resources } from "@/app/lib/placeholder-data"
-import { Resource } from "@/app/lib/types/dataDefinition"
+import { Resource } from "@/app/lib/types/resource"
 import ResourceForm, { resourceFormSchema } from "../../components/ResourceForm"
 
 const formatToFormData = (resource: Resource | undefined) => {
