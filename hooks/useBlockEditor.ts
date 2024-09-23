@@ -19,7 +19,7 @@ interface UseBlockEditorProps {
 export const useBlockEditor = ({ onChange }: UseBlockEditorProps) => {
   const editor = useEditor(
     {
-      immediatelyRender: true,
+      immediatelyRender: false,
       shouldRerenderOnTransaction: false,
       autofocus: true,
       onCreate: ctx => {
