@@ -20,7 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import MultipleSelect from "@/components/ui/multiple-select"
-import { Textarea } from "@/components/ui/textarea"
+import { BlockEditor } from "@/components/BlockEditor"
 import { resourceTypes, resourceTags } from "@/app/lib/placeholder-data"
 import { ResourceType } from "@/app/lib/types/resourceType"
 
@@ -92,20 +92,19 @@ export default function ResourceForm({ defaultValues = initialValues, onSubmit }
         <FormField
           control={resourceForm.control}
           name="description"
-          render={({ field }) => (
+          render={({ field: { onChange } }) => (
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="description"
-                  className="h-80"
-                  {...field}
-                />
+                <BlockEditor onChange={onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
+        
+
         <FormField
           control={resourceForm.control}
           name="resourceUrl"
