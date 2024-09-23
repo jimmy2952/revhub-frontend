@@ -87,16 +87,16 @@ export const GROUPS: Group[] = [
           editor.chain().focus().toggleTaskList().run()
         },
       },
-      {
-        name: "toggleList",
-        label: "Toggle List",
-        iconName: "ListCollapse",
-        description: "Toggles can show and hide content",
-        aliases: ["toggle"],
-        action: editor => {
-          editor.chain().focus().setDetails().run()
-        },
-      },
+      // {
+      //   name: "toggleList",
+      //   label: "Toggle List",
+      //   iconName: "ListCollapse",
+      //   description: "Toggles can show and hide content",
+      //   aliases: ["toggle"],
+      //   action: editor => {
+      //     editor.chain().focus().setDetails().run()
+      //   },
+      // },
       {
         name: "blockquote",
         label: "Blockquote",

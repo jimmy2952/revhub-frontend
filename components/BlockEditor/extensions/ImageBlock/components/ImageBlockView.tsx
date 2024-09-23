@@ -8,10 +8,10 @@ interface ImageBlockViewProps {
   getPos: () => number
   node: Node & {
     attrs: {
-      src: string
+      src?: string
     }
   }
-  updateAttributes: (attrs: Record<string, string>) => void
+  updateAttributes: (_attrs: Record<string, string>) => void
 }
 
 export const ImageBlockView = (props: ImageBlockViewProps) => {

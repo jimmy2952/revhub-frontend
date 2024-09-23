@@ -9,7 +9,7 @@ import { DropdownButton, DropdownCategoryTitle } from "@/components/BlockEditor/
 export type ContentTypePickerOption = {
   label: string
   id: string
-  type: "option"
+  type: string
   disabled: () => boolean
   isActive: () => boolean
   onClick: () => void

@@ -65,7 +65,9 @@ export const useBlockEditor = ({ onChange }: UseBlockEditorProps) => {
     equalityFn: deepEqual,
   })
 
-  window.editor = editor
+  // if (window !== undefined) {
+  //   window.editor = editor
+  // }
 
   return { editor, users }
 }

@@ -2,9 +2,9 @@ import { DropdownButton } from "@/components/BlockEditor/ui/Dropdown"
 import { Icon } from "@/components/BlockEditor/ui/Icon"
 import { Surface } from "@/components/BlockEditor/ui/Surface"
 import { Toolbar } from "@/components/BlockEditor/ui/Toolbar"
-import { languages, tones } from "@/components/BlockEditor/lib/constants"
+import { tones } from "@/components/BlockEditor/lib/constants"
 import * as Dropdown from "@radix-ui/react-dropdown-menu"
-import type { Language } from "@/components/BlockEditor/extensions/Ai"
+// import type { Language } from "@/components/BlockEditor/extensions/Ai"
 import { useCallback } from "react"
 
 export type AIDropdownProps = {
@@ -14,7 +14,7 @@ export type AIDropdownProps = {
   onMakeLonger: () => void
   onEmojify: () => void
   onTldr: () => void
-  onTranslate: (_language: Language) => void
+  // onTranslate: (_language: Language) => void
   onTone: (_tone: string) => void
   onCompleteSentence: () => void
 }
@@ -28,10 +28,10 @@ export const AIDropdown = ({
   onSimplify,
   onTldr,
   onTone,
-  onTranslate,
+  // onTranslate,
 }: AIDropdownProps) => {
   const handleTone = useCallback((tone: string) => () => onTone(tone), [onTone])
-  const handleTranslate = useCallback((language: Language) => () => onTranslate(language), [onTranslate])
+  // const handleTranslate = useCallback((language: Language) => () => onTranslate(language), [onTranslate])
 
   return (
     <Dropdown.Root>
@@ -111,11 +111,11 @@ export const AIDropdown = ({
             </Dropdown.SubTrigger>
             <Dropdown.SubContent>
               <Surface className="flex max-h-80 min-w-60 flex-col overflow-auto p-2">
-                {languages.map(lang => (
+                {/* {languages.map(lang => (
                   <Dropdown.Item onClick={handleTranslate(lang.value)} key={lang.value}>
                     <DropdownButton>{lang.label}</DropdownButton>
                   </Dropdown.Item>
-                ))}
+                ))} */}
               </Surface>
             </Dropdown.SubContent>
           </Dropdown.Sub>

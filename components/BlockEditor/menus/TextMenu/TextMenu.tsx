@@ -13,6 +13,7 @@ import { useTextmenuContentTypes } from "./hooks/useTextmenuContentTypes"
 import { ContentTypePicker } from "./components/ContentTypePicker"
 // import { AIDropdown } from './components/AIDropdown'
 import { EditLinkPopover } from "./components/EditLinkPopover"
+import type { ContentPickerOptions } from "./components/ContentTypePicker"
 
 // We memorize the button so each button is not rerendered
 // on every editor state change
@@ -72,7 +73,7 @@ export const TextMenu = ({ editor }: TextMenuProps) => {
           onTranslate={commands.onTranslate}
         />
         <Toolbar.Divider /> */}
-        <MemoContentTypePicker options={blockOptions} />
+        <MemoContentTypePicker options={blockOptions as ContentPickerOptions} />
         {/* <MemoFontFamilyPicker onChange={commands.onSetFont} value={states.currentFont || ''} /> */}
         <MemoFontSizePicker onChange={commands.onSetFontSize} value={states.currentSize || ""} />
         <Toolbar.Divider />

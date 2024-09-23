@@ -39,7 +39,6 @@ import {
 } from "."
 
 import { ImageUpload } from "./ImageUpload"
-import { TableOfContentsNode } from "./TableOfContentsNode"
 
 export const ExtensionKit = () => [
   Document,
@@ -76,7 +75,6 @@ export const ExtensionKit = () => [
   Highlight.configure({ multicolor: true }),
   Underline,
   CharacterCount.configure({ limit: 50000 }),
-  TableOfContentsNode,
   ImageUpload,
   ImageBlock,
   TextAlign.extend({
