@@ -1,4 +1,4 @@
-import { Resource } from "@/app/lib/types/dataDefinition"
+import { Resource } from "@/app/lib/types/resource"
 import Image from "next/image"
 import { Skeleton } from "@/components/ui/skeleton"
 import {

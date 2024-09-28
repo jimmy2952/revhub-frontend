@@ -29,7 +29,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Resource } from "@/app/lib/types/dataDefinition"
+import { Resource } from "@/app/lib/types/resource"
 import { resourceTableColumn } from "./resourceTableColumn"
 
 interface ResourceTableProps {

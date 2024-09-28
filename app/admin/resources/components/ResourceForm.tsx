@@ -1,6 +1,7 @@
 import { useRef, ChangeEvent } from "react"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
+import { useQuery } from "@tanstack/react-query"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -21,8 +22,9 @@ import {
 } from "@/components/ui/select"
 import MultipleSelect from "@/components/ui/multiple-select"
 import { Textarea } from "@/components/ui/textarea"
-import { resourceTypes, resourceTags } from "@/app/lib/placeholder-data"
+import { resourceTags } from "@/app/lib/placeholder-data"
 import { ResourceType } from "@/app/lib/types/resourceType"
+import { fetchResourceTypes } from "@/app/lib/request"
 
 export const resourceFormSchema = z.object({
   name: z.string().min(2).max(50),
@@ -52,6 +54,12 @@ const initialValues = {
 
 export default function ResourceForm({ defaultValues = initialValues, onSubmit }: ResourceTypeFormProps) {
   const imageInputRef = useRef<HTMLInputElement>(null)
+
+  const { data: resourceTypes = [] } = useQuery({
+    queryKey: ["admin", "resource-types"],
+    queryFn: fetchResourceTypes
+  })
+
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
